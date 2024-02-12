@@ -53,6 +53,7 @@ def parse_args(joint = False):
             help = 'Size of the oiutput target')
     parser.add_argument('--pair_type', type = str, default = None,
             help = 'Either prompt_longer, output_longer, or same_length')
+    parser.add_argument('--dry_run', action='store_true')
     args = parser.parse_args()
     if isinstance(args.prompt_prefix, list):
         args.prompt_prefix = ' '.join(args.prompt_prefix)

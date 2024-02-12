@@ -1,5 +1,4 @@
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
-from transformers import GPTJForCausalLM, AutoTokenizer
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, GPTJForCausalLM, AutoTokenizer, AutoModelForCausalLM
 from datetime import datetime
 import torch
 
@@ -16,7 +15,9 @@ def get_model_and_tokenizer(args):
         model = GPTJForCausalLM.from_pretrained("EleutherAI/gpt-j-6B", torch_dtype=torch.float16)
         tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
     else:
-        raise NotImplementedError
+        print(f"WARNING: using newly supported model {args.model_id}")
+        model = AutoModelForCausalLM.from_pretrained(args.model_id, torch_dtype=torch.float16)
+        tokenizer = AutoTokenizer.from_pretrained(args.model_id)
     model = model.to('cuda')
     print(f"Finished in {str(datetime.now()-start)}")
     return model, tokenizer
